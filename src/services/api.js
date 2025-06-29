@@ -1,5 +1,5 @@
-// const API_BASE_URL = 'http://localhost:5000/api';
-const API_BASE_URL = 'https://nasa-data-explorer-server-six.vercel.app/';
+const API_BASE_URL = 'http://localhost:5000/api';
+
 
 // Generic API request handler
 const apiRequest = async (endpoint, params = {}) => {

@@ -140,7 +140,20 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 NASA Space Explorer Server running on port ${PORT}`);
-  console.log(`🌌 Using NASA API Key: ${NASA_API_KEY === 'DEMO_KEY' ? 'DEMO_KEY (Limited)' : 'Custom Key'}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`🚀 NASA Space Explorer Server running on port ${PORT}`);
+//   console.log(`🌌 Using NASA API Key: ${NASA_API_KEY === 'DEMO_KEY' ? 'DEMO_KEY (Limited)' : 'Custom Key'}`);
+// });
+
+export default app; 
+
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🚀 NASA Space Explorer Server running on port ${PORT}`);
+    console.log(
+      `🌌 Using NASA API Key: ${
+        NASA_API_KEY === 'DEMO_KEY' ? 'DEMO_KEY (Limited)' : 'Custom Key'
+      }`
+    );
+  });
+}
