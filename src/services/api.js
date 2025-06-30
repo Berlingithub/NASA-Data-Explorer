@@ -1,10 +1,12 @@
 // const API_BASE_URL = 'http://localhost:5000/api';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const NASA_BASE_URL = import.meta.env.NASA_BASE_URL;
 
 // Generic API request handler
 const apiRequest = async (endpoint, params = {}) => {
-  const url = new URL(`${API_BASE_URL}${endpoint}`);
+  // const url = new URL(`${API_BASE_URL}${endpoint}`);
+  const url = new URL(`${NASA_BASE_URL}${endpoint}`);
   
   // Add parameters to URL
   Object.keys(params).forEach(key => {
