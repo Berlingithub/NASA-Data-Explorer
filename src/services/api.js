@@ -1,11 +1,14 @@
 // const API_BASE_URL = 'http://localhost:5000/api';
 
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Generic API request handler
 const apiRequest = async (endpoint, params = {}) => {
-  const url = new URL(`${API_BASE_URL}${endpoint}`);
+  const base = import.meta.env.VITE_API_BASE_URL || '/api';
+  const url = new URL(`${base}${endpoint}`, window.location.origin);
+  
+  // const url = new URL(`${API_BASE_URL}${endpoint}`);
   
   // Add parameters to URL
   Object.keys(params).forEach(key => {
@@ -14,7 +17,7 @@ const apiRequest = async (endpoint, params = {}) => {
     }
   });
 
-  try {
+  try { 
     const response = await fetch(url);
     
     if (!response.ok) {
