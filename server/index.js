@@ -8,7 +8,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const NASA_API_KEY = process.env.NASA_API_KEY || 'DEMO_KEY';
-const NASA_BASE_URL = 'https://api.nasa.gov';
+// const NASA_BASE_URL = 'https://api.nasa.gov';
+
+const NASA_BASE_URL = import.meta.env.NASA_BASE_URL;
 
 // Middleware
 app.use(cors());
