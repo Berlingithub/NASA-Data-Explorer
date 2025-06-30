@@ -1,83 +1,35 @@
 // const API_BASE_URL = 'http://localhost:5000/api';
 
 
-// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// // Generic API request handler
-// const apiRequest = async (endpoint, params = {}) => {
-//   const url = new URL(`${API_BASE_URL}${endpoint}`);
+// Generic API request handler
+const apiRequest = async (endpoint, params = {}) => {
+  const url = new URL(`${API_BASE_URL}${endpoint}`);
   
-//   // Add parameters to URL
-//   Object.keys(params).forEach(key => {
-//     if (params[key] !== undefined && params[key] !== null && params[key] !== '') {
-//       url.searchParams.append(key, params[key]);
-//     }
-//   });
-
-//   try {
-//     const response = await fetch(url);
-    
-//     if (!response.ok) {
-//       const errorData = await response.json().catch(() => ({}));
-//       throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
-//     }
-    
-//     return await response.json();
-//   } catch (error) {
-//     if (error.name === 'TypeError' && error.message.includes('fetch')) {
-//       throw new Error('Unable to connect to NASA API server. Please ensure the backend is running.');
-//     }
-//     throw error;
-//   }
-// };
-
-
-const BASE = import.meta.env.VITE_API_BASE_URL || '/api';
-
-/**
- * Generic API request helper
- * @param {string} endpoint   – e.g. '/apod'
- * @param {object} params     – query‑string key/value pairs
- * @returns {Promise<any>}    – parsed JSON
- */
-export const apiRequest = async (endpoint, params = {}) => {
-  // -------------------------------------------------------------------------
-  // 2)   Build the URL safely for both:
-  //      • absolute bases ("http://localhost:5000/api")
-  //      • relative bases ("/api")
-  // -------------------------------------------------------------------------
-  const url = BASE.startsWith('http')
-    ? new URL(`${BASE}${endpoint}`)
-    : new URL(`${BASE}${endpoint}`, window.location.origin);
-
-  // 3)   Append non‑empty query params
-  for (const [key, value] of Object.entries(params)) {
-    if (value !== undefined && value !== null && value !== '') {
-      url.searchParams.append(key, value);
+  // Add parameters to URL
+  Object.keys(params).forEach(key => {
+    if (params[key] !== undefined && params[key] !== null && params[key] !== '') {
+      url.searchParams.append(key, params[key]);
     }
-  }
+  });
 
-  // 4)   Execute request + basic error handling
   try {
-    const res = await fetch(url);
-    if (!res.ok) {
-      const data = await res.json().catch(() => ({}));
-      throw new Error(data.error || `HTTP ${res.status} ${res.statusText}`);
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
     }
-    return res.json();
-  } catch (err) {
-    // Network / CORS / DNS errors surface as TypeError in Fetch API
-    if (err instanceof TypeError && err.message.includes('fetch')) {
-      throw new Error(
-        'Unable to connect to NASA API server. Please ensure the backend is running.'
-      );
+    
+    return await response.json();
+  } catch (error) {
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      throw new Error('Unable to connect to NASA API server. Please ensure the backend is running.');
     }
-    throw err;
+    throw error;
   }
 };
-
-
-
 
 // Astronomy Picture of the Day
 export const fetchAPOD = (params = {}) => {
