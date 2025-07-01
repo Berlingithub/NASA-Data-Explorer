@@ -5,8 +5,10 @@
 
 // Generic API request handler
 const apiRequest = async (endpoint, params = {}) => {
-  const base = import.meta.env.VITE_API_BASE_URL || '/api';
-  const url = new URL(`${base}${endpoint}`, window.location.origin);
+  // const base = import.meta.env.VITE_API_BASE_URL || '/api';
+  const base = import.meta.env.VITE_API_BASE_URL || '';
+  // const url = new URL(`${base}${endpoint}`, window.location.origin);
+  const url = new URL(`/api${endpoint}`, window.location.origin);
   
   // const url = new URL(`${API_BASE_URL}${endpoint}`);
   
